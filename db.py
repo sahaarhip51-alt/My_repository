@@ -1,6 +1,8 @@
 #print("Here will be my db")
 #print("Let,s go!")
 import mariadb
+from select import select
+
 conn = mariadb.connect(
     host="84.38.180.130",
     port=3306,
@@ -10,3 +12,51 @@ conn = mariadb.connect(
     autocommit=False   # важно для UPDATE / DELETE
 )
 cursor = conn.cursor()
+def show_profile(id):
+    cursor.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (id,)
+    )
+    return cursor.fetchone()
+def show_contacts(id):
+    cursor.execute(
+        "SELECT * FROM contacts WHERE id =?",
+        (id,)
+    )
+    return cursor.fetchone()
+def show_messages(id):
+    cursor.execute(
+        "SELECT * FROM messages WHERE id =?",
+        (id,)
+    )
+    return cursor.fetchone()
+def enter_message(autor,text,chatname):
+    cursor.execute(
+        "INSERT INTO message (id, text, autor_id, chatname) VALUES (?, ?,?,?)",
+        (id, text, autor, chatname)
+    )
+
+    conn.commit()
+def change_profile(id, password, email, username, city):
+    cursor.execute(
+        "UPDATE users SET password = ?, email = ?, username=?, city = ? WHERE id = ?",
+        ( password, email, username, city, id)
+    )
+
+    conn.commit()
+
+def delite_contact(id):
+    cursor.execute(
+        "DELETE FROM contacts WHERE id = ?",
+        (id,)
+    )
+
+    conn.commit()
+def add_contact(inform ):
+    cursor.execute(
+        "INSERT INTO users (contacts) VALUES (inform)",
+        ()
+    )
+
+    conn.commit()
+def delite_message():
