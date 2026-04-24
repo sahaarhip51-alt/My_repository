@@ -52,11 +52,20 @@ def delite_contact(id):
     )
 
     conn.commit()
-def add_contact(inform ):
+def add_contact(id):
     cursor.execute(
-        "INSERT INTO users (contacts) VALUES (inform)",
-        ()
+        "INSERT INTO users (contacts) VALUES ( ? )",
+        (id,)
+    )
+    cursor.execute(
+        "INSERT INTO chats (participants) VALUES ( ? ) where id = ?",
+        (id,)
     )
 
     conn.commit()
-def delite_message():
+def delite_message(id):
+    cursor.execute(
+        "delete from message where id =?",
+        (id,)
+    )
+    conn.commit()
