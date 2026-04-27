@@ -52,6 +52,7 @@ def delite_contact(id):
     )
 
     conn.commit()
+    return "успешно удален"
 def add_contact(id):
     cursor.execute(
         "INSERT INTO users (contacts) VALUES ( ? )",
@@ -69,3 +70,4 @@ def delite_message(id):
         (id,)
     )
     conn.commit()
+    return "успешно!"
